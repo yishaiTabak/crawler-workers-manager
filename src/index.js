@@ -1,3 +1,13 @@
+const express = require('express');
+const cors = require('cors')
+
+const app = express();
+const PORT = process.env.PORT;
+
+app.use(cors())
+app.use(express.json());
+
+
 const {Consumer} = require('sqs-consumer');
 const {SQSClient } = require('@aws-sdk/client-sqs');
 const axios = require('axios')
@@ -32,7 +42,7 @@ const handleMessage = async (message) => {
   console.log(taskQueue.length);
 }
 
-const app = Consumer.create({
+const listener = Consumer.create({
   queueUrl: process.env.QUEUE_URL,
   handleMessage,
   sqs: new SQSClient({
@@ -40,19 +50,19 @@ const app = Consumer.create({
   })
 });
 
-app.on('error', (err) => {
+listener.on('error', (err) => {
   console.error(err.message);
 });
 
-app.on('processing_error', (err) => {
+listener.on('processing_error', (err) => {
   console.error(err.message);
 });
 
-app.on('timeout_error', (err) => {
+listener.on('timeout_error', (err) => {
   console.error(err.message);
 });
 
-app.start();
+listener.start();
 
 const checkForMoreMission = async (availableWorker)=>{
   if (taskQueue.length > 0) {
@@ -65,3 +75,11 @@ const checkForMoreMission = async (availableWorker)=>{
       })
     }
 }
+
+app.use("/", (req,res) =>{
+  res.send("ok")
+})
+
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
