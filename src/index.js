@@ -79,7 +79,7 @@ const checkForMoreMission = async (availableWorker)=>{
 const router = express.Router()
 
 router.get("/test", (req,res) =>{
-  res.send("ok")
+  res.send("oks")
 })
 
 app.use(router)
