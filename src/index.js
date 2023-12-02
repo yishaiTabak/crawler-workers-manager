@@ -6,9 +6,7 @@ const workers = [
   {
     url: process.env.URL_WORKER_1,
     isBusy:false
-  },
-  {url:process.env.URL_WORKER_2,
-  isBusy:false}
+  }
 ]
 
 const taskQueue = [];
