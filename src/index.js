@@ -76,9 +76,18 @@ const checkForMoreMission = async (availableWorker)=>{
     }
 }
 
+const router = express.Router()
+
+router.get("/test", async (req,res) =>{
+  res.send("ok")
+})
+
+app.use(router)
+
 app.use("/", (req,res) =>{
   res.send("ok")
 })
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
