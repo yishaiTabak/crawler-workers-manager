@@ -18,7 +18,7 @@ const handleMessage = async (message) => {
 
     if (availableWorker) {
       availableWorker.isBusy = true;
-      axios.post(availableWorker.url, JSON.parse(message.Body))
+      axios.post(availableWorker.url+"/start", JSON.parse(message.Body))
         .then(() => {
           availableWorker.isBusy = false;
           checkForMoreMission(availableWorker)
