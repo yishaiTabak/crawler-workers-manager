@@ -1,13 +1,3 @@
-const express = require('express');
-const cors = require('cors')
-
-const app = express();
-const PORT = process.env.PORT;
-
-app.use(cors())
-app.use(express.json());
-
-
 const {Consumer} = require('sqs-consumer');
 const {SQSClient } = require('@aws-sdk/client-sqs');
 const axios = require('axios')
@@ -75,20 +65,3 @@ const checkForMoreMission = async (availableWorker)=>{
       })
     }
 }
-
-const router = express.Router()
-
-router.get("/test", (req,res) =>{
-  res.send("ok")
-})
-
-app.use(router)
-
-app.use("/", (req,res) =>{
-  res.send("ok")
-})
-
-
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
