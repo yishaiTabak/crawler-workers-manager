@@ -16,7 +16,7 @@ const handleMessage = async (message) => {
 
     if (availableWorker) {
       availableWorker.isBusy = true;
-      axios.post(availableWorker.url+"/start", JSON.parse(message.Body))
+      axios.post(availableWorker.url+"/start", JSON.parse(message.Body), { timeout: 300000 })
         .then(() => {
           availableWorker.isBusy = false;
           checkForMoreMission(availableWorker)
@@ -58,7 +58,7 @@ const checkForMoreMission = async (availableWorker)=>{
   if (taskQueue.length > 0) {
     const nextTask = taskQueue.shift();
     availableWorker.isBusy = true;
-    axios.post(availableWorker.url, nextTask)
+    axios.post(availableWorker.url+"/start", nextTask,{ timeout: 300000 })
       .then(() => {
         availableWorker.isBusy = false;
         checkForMoreMission(availableWorker)
